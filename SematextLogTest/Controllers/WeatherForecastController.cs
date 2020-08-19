@@ -16,16 +16,14 @@ namespace SematextLogTest.Controllers
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            Log.Debug(this, "Debug Test Message");
+            Log.Info(this, "Info Test Message");
+            Log.Error(this, "Error Test Message", new Exception("Exception message example"));
+
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
