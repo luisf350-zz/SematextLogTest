@@ -11,18 +11,24 @@ namespace SematextLogTest.Controllers
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
     {
+        private readonly ILog<WeatherForecastController> _logger;
+
         private static readonly string[] Summaries = new[]
         {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
         };
 
+        public WeatherForecastController(ILog<WeatherForecastController> logger)
+        {
+            _logger = logger;
+        }
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            Log.Debug(this, "Debug Test Message");
-            Log.Info(this, "Info Test Message");
-            Log.Error(this, "Error Test Message", new Exception("Exception message example"));
+            _logger.Debug("Debug Test Message");
+            //Log.Info(this, "Info Test Message");
+            //Log.Error(this, "Error Test Message", new Exception("Exception message example"));
 
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
